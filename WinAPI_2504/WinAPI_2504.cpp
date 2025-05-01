@@ -126,16 +126,22 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 //
 
-WORD a;
 //HWND -> Window Handle
 //messgae -> 메시지
 //wParam -> 메시지에 대한 추가 정보(키보드 입력정보, 마우스 입력정보 등)
 //lParam -> 메시지에 대한 추가 정보(마우스 위치)
 
+PaintTool* paintTool = nullptr;
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+	case WM_CREATE:
+	{
+		paintTool = new PaintTool(hWnd);
+	}
+	break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -190,27 +196,45 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 	case WM_LBUTTONDOWN://마우스 왼쪽 버튼 클릭
 	{
-		int mouseX = LOWORD(lParam);
-		int mouseY = HIWORD(lParam);
-
-		HDC hdc = GetDC(hWnd);
-
-		SetPixel(hdc, mouseX, mouseY, RGB(255, 0, 0));
+        //prevMousePos.x = LOWORD(lParam);
+		//prevMousePos.y = HIWORD(lParam);
+        //
+		//isMouseDown = true;
+		paintTool->OnLButtonDown(lParam);
 	}
         break;
     case WM_MOUSEMOVE:
     {
-        int mouseX = LOWORD(lParam);
-        int mouseY = HIWORD(lParam);
-
-        HDC hdc = GetDC(hWnd);
-
-        SetPixel(hdc, mouseX, mouseY, RGB(255, 0, 0));
+        //if (isMouseDown)
+        //{
+        //    POINT curMousePos;
+        //    curMousePos.x = LOWORD(lParam);
+        //    curMousePos.y = HIWORD(lParam);
+        //
+        //    HDC hdc = GetDC(hWnd);
+        //
+		//	MoveToEx(hdc, prevMousePos.x, prevMousePos.y, nullptr);
+		//	LineTo(hdc, curMousePos.x, curMousePos.y);
+		//	ReleaseDC(hWnd, hdc);
+		//	prevMousePos = curMousePos;
+        //}        
+		paintTool->OnMouseMove(lParam);
     }
         break;
     case WM_LBUTTONUP:
+    {
+        //isMouseDown = false;
+		paintTool->OnLButtonUp(lParam);
+    }
+        break;
+
+    case WM_KEYDOWN:
+    {
+		paintTool->OnKeyDown(wParam);
+    }
         break;
     case WM_DESTROY:
+		delete paintTool;
         PostQuitMessage(0);
         break;
     default:
