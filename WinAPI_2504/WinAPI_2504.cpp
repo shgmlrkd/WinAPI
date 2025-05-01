@@ -97,8 +97,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   WCHAR title[] = L"내 게임";
+
+   HWND hWnd = CreateWindowW(szWindowClass, title, WS_OVERLAPPEDWINDOW,
+	   100, 100,//시작 위치
+	   500, 500,//창 크기
+       nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -121,6 +125,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+
+WORD a;
+//HWND -> Window Handle
+//messgae -> 메시지
+//wParam -> 메시지에 대한 추가 정보(키보드 입력정보, 마우스 입력정보 등)
+//lParam -> 메시지에 대한 추가 정보(마우스 위치)
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -145,10 +156,59 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
+			//H -> Handle
+			//DC -> Device Context
+            //HDC -> 출력을 하는 부분에도 모두 관여
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+
+			const WCHAR* text = L"Hello, World!";
+
+			//LPCWSTR -> Long Pointer to Constant Wide String
+            TextOut(hdc, 0, 0, text, 13);
+
+            //Point
+            for (int i = 0; i < 100; i++)
+            {
+				for (int j = 0; j < 100; j++)
+				{
+					SetPixel(hdc, 100 + i, 100 + j, RGB(0, 0, 0));
+				}
+            }			
+
+            //Line
+			MoveToEx(hdc, 0, 100, nullptr);//시작점
+			LineTo(hdc, 100, 200);//끝점
+
+			//Rectangle
+			Rectangle(hdc, 100, 0, 200, 100);
+
+			//Ellipse
+			Ellipse(hdc, 200, 0, 300, 100);
+
             EndPaint(hWnd, &ps);
         }
+        break;
+	case WM_LBUTTONDOWN://마우스 왼쪽 버튼 클릭
+	{
+		int mouseX = LOWORD(lParam);
+		int mouseY = HIWORD(lParam);
+
+		HDC hdc = GetDC(hWnd);
+
+		SetPixel(hdc, mouseX, mouseY, RGB(255, 0, 0));
+	}
+        break;
+    case WM_MOUSEMOVE:
+    {
+        int mouseX = LOWORD(lParam);
+        int mouseY = HIWORD(lParam);
+
+        HDC hdc = GetDC(hWnd);
+
+        SetPixel(hdc, mouseX, mouseY, RGB(255, 0, 0));
+    }
+        break;
+    case WM_LBUTTONUP:
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
