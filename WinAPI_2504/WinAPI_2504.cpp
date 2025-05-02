@@ -9,6 +9,7 @@
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 HWND hWnd;                                      // 현재 창입니다.
+POINT mousePos;
 
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
@@ -103,7 +104,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    hWnd = CreateWindowW(szWindowClass, title, WS_OVERLAPPEDWINDOW,
 	   100, 100,//시작 위치
-	   500, 500,//창 크기
+	   SCREEN_WIDTH, SCREEN_HEIGHT,//창 크기
        nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
@@ -117,7 +118,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-Player* circle = nullptr;
+GameManager* gameManager;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -125,8 +126,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 	{
-		circle = new Player();
-        circle->SetCenter(300, 300);
+		gameManager = new GameManager(hWnd);
 
         //1000 -> 1초
         SetTimer(hWnd, 1, 10, nullptr);
@@ -134,7 +134,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_TIMER:
     {
-        circle->Update();
+		gameManager->Update();
 	}
 	break;
     case WM_COMMAND:
@@ -154,47 +154,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+    case WM_MOUSEMOVE:
+	{
+		mousePos.x = LOWORD(lParam);
+		mousePos.y = HIWORD(lParam);
+	}
+        break;
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             
-            circle->Render(hdc);
+            gameManager->Render(hdc);
 
             EndPaint(hWnd, &ps);
         }
-        break;
-	case WM_LBUTTONDOWN:
-	{
-	}
-        break;
-    case WM_MOUSEMOVE:
-    {
-    }
-        break;
-    case WM_LBUTTONUP:
-    {
-    }
-        break;
-
-    case WM_KEYDOWN:
-    {
-        //switch (wParam)
-        //{
-        //case VK_RIGHT:
-        //{			
-        //    POINT curPos = circle->GetCenter();
-        //    curPos.x += 10;
-        //    circle->SetCenter(curPos);
-		//	InvalidateRect(hWnd, nullptr, true);
-        //}
-        //    break;
-        //default:
-        //    break;
-        //}
-    }
-        break;
+        break;	
     case WM_DESTROY:
+        delete gameManager;
         PostQuitMessage(0);
         break;
     default:

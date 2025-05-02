@@ -131,8 +131,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
+    <ClInclude Include="Framework\GameManager.h" />
     <ClInclude Include="Objects\Bullet.h" />
+    <ClInclude Include="Objects\BulletManager.h" />
     <ClInclude Include="Objects\Circle.h" />
+    <ClInclude Include="Objects\Enemy.h" />
     <ClInclude Include="Objects\PaintTool.h" />
     <ClInclude Include="Objects\Player.h" />
     <ClInclude Include="Resource.h" />
@@ -143,7 +146,11 @@
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Framework\GameManager.cpp" />
+    <ClCompile Include="Objects\Bullet.cpp" />
+    <ClCompile Include="Objects\BulletManager.cpp" />
     <ClCompile Include="Objects\Circle.cpp" />
+    <ClCompile Include="Objects\Enemy.cpp" />
     <ClCompile Include="Objects\PaintTool.cpp" />
     <ClCompile Include="Objects\Player.cpp" />
     <ClCompile Include="WinAPI_2504.cpp" />
