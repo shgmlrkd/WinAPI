@@ -25,7 +25,13 @@ void Enemy::Update()
 
 	if (BulletManager::Get()->IsCollision(this))
 	{
-		isActive = false;
+		//isActive = false;
+		hp -= 10;
+
+		if (hp <= 0)
+		{
+			isActive = false;
+		}
 	}
 }
 
