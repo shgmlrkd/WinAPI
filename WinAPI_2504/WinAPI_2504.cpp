@@ -8,6 +8,8 @@
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
+HWND hWnd;                                      // 현재 창입니다.
+
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
@@ -99,7 +101,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    WCHAR title[] = L"내 게임";
 
-   HWND hWnd = CreateWindowW(szWindowClass, title, WS_OVERLAPPEDWINDOW,
+   hWnd = CreateWindowW(szWindowClass, title, WS_OVERLAPPEDWINDOW,
 	   100, 100,//시작 위치
 	   500, 500,//창 크기
        nullptr, nullptr, hInstance, nullptr);
@@ -115,23 +117,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-//
-//  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  용도: 주 창의 메시지를 처리합니다.
-//
-//  WM_COMMAND  - 애플리케이션 메뉴를 처리합니다.
-//  WM_PAINT    - 주 창을 그립니다.
-//  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
-//
-//
-
-//HWND -> Window Handle
-//messgae -> 메시지
-//wParam -> 메시지에 대한 추가 정보(키보드 입력정보, 마우스 입력정보 등)
-//lParam -> 메시지에 대한 추가 정보(마우스 위치)
-
-PaintTool* paintTool = nullptr;
+Player* circle = nullptr;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -139,7 +125,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 	{
-		paintTool = new PaintTool(hWnd);
+		circle = new Player();
+        circle->SetCenter(300, 300);
+
+        //1000 -> 1초
+        SetTimer(hWnd, 1, 10, nullptr);
+	}
+	break;
+	case WM_TIMER:
+    {
+        circle->Update();
 	}
 	break;
     case WM_COMMAND:
@@ -162,79 +157,44 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
-			//H -> Handle
-			//DC -> Device Context
-            //HDC -> 출력을 하는 부분에도 모두 관여
             HDC hdc = BeginPaint(hWnd, &ps);
-
-			const WCHAR* text = L"Hello, World!";
-
-			//LPCWSTR -> Long Pointer to Constant Wide String
-            TextOut(hdc, 0, 0, text, 13);
-
-            //Point
-            for (int i = 0; i < 100; i++)
-            {
-				for (int j = 0; j < 100; j++)
-				{
-					SetPixel(hdc, 100 + i, 100 + j, RGB(0, 0, 0));
-				}
-            }			
-
-            //Line
-			MoveToEx(hdc, 0, 100, nullptr);//시작점
-			LineTo(hdc, 100, 200);//끝점
-
-			//Rectangle
-			Rectangle(hdc, 100, 0, 200, 100);
-
-			//Ellipse
-			Ellipse(hdc, 200, 0, 300, 100);
+            
+            circle->Render(hdc);
 
             EndPaint(hWnd, &ps);
         }
         break;
-	case WM_LBUTTONDOWN://마우스 왼쪽 버튼 클릭
+	case WM_LBUTTONDOWN:
 	{
-        //prevMousePos.x = LOWORD(lParam);
-		//prevMousePos.y = HIWORD(lParam);
-        //
-		//isMouseDown = true;
-		paintTool->OnLButtonDown(lParam);
 	}
         break;
     case WM_MOUSEMOVE:
     {
-        //if (isMouseDown)
-        //{
-        //    POINT curMousePos;
-        //    curMousePos.x = LOWORD(lParam);
-        //    curMousePos.y = HIWORD(lParam);
-        //
-        //    HDC hdc = GetDC(hWnd);
-        //
-		//	MoveToEx(hdc, prevMousePos.x, prevMousePos.y, nullptr);
-		//	LineTo(hdc, curMousePos.x, curMousePos.y);
-		//	ReleaseDC(hWnd, hdc);
-		//	prevMousePos = curMousePos;
-        //}        
-		paintTool->OnMouseMove(lParam);
     }
         break;
     case WM_LBUTTONUP:
     {
-        //isMouseDown = false;
-		paintTool->OnLButtonUp(lParam);
     }
         break;
 
     case WM_KEYDOWN:
     {
-		paintTool->OnKeyDown(wParam);
+        //switch (wParam)
+        //{
+        //case VK_RIGHT:
+        //{			
+        //    POINT curPos = circle->GetCenter();
+        //    curPos.x += 10;
+        //    circle->SetCenter(curPos);
+		//	InvalidateRect(hWnd, nullptr, true);
+        //}
+        //    break;
+        //default:
+        //    break;
+        //}
     }
         break;
     case WM_DESTROY:
-		delete paintTool;
         PostQuitMessage(0);
         break;
     default:
