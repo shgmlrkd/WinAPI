@@ -12,9 +12,9 @@ public:
 	bool IsCollisionCircle(Circle* circle);
 	
 
-	void SetCenter(int x, int y) { center = { x, y }; }
-	void SetCenter(POINT center) { this->center = center; }
-	POINT GetCenter() { return center; }
+	void SetCenter(float x, float y) { center = { x, y }; }
+	void SetCenter(Vector2 center) { this->center = center; }
+	Vector2 GetCenter() { return center; }
 
 	void SetActive(bool isActive) { this->isActive = isActive; }
 	bool IsActive() { return isActive; }
@@ -22,6 +22,6 @@ public:
 protected:
 	bool isActive = true;
 
-	POINT center = {};
+	Vector2 center = {};
 	int radius;
 };

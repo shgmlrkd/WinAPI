@@ -1,46 +1,64 @@
 #include "Framework.h"
 
-GameManager::GameManager(HWND hWnd)
+#include "Scenes/ShootingScene.h"
+
+GameManager::GameManager()
 {
-	hdc = GetDC(hWnd);
+	hdc = GetDC(hWnd);	
 
-	player = new Player();
-	player->SetCenter(200, 300);
+	backBufferDC = CreateCompatibleDC(hdc);
+	backBufferBitmap = CreateCompatibleBitmap(hdc, SCREEN_WIDTH, SCREEN_HEIGHT);
+	SelectObject(backBufferDC, backBufferBitmap);
 
-	enemy = new Enemy();
-	enemy->SetCenter(200, 100);
+	Create();
 
-	BulletManager::Get();
+	scene = new ShootingScene();
 }
 
 GameManager::~GameManager()
 {
-	ReleaseDC(hWnd, hdc);	
+	ReleaseDC(hWnd, hdc);		
 
-	delete player;
+	delete scene;
 
-	BulletManager::Delete();
+	Release();
+
+	DeleteObject(backBufferBitmap);
+	DeleteDC(backBufferDC);
 }
 
 void GameManager::Update()
 {
-	player->Update();
-	enemy->Update();
+	Timer::Get()->Update();
+	Input::Get()->Update();
 
-	if (player->IsCollisionCircle(enemy))
-	{
-		enemy->SetActive(false);
-	}
+	scene->Update();
 
-	BulletManager::Get()->Update();
-
-	InvalidateRect(hWnd, nullptr, true);
+	InvalidateRect(hWnd, nullptr, false);
 }
 
-void GameManager::Render(HDC hdc)
+void GameManager::Render()
 {
-	player->Render(hdc);
-	enemy->Render(hdc);
+	PatBlt(backBufferDC, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITENESS);	
 
-	BulletManager::Get()->Render(hdc);
+	scene->Render(backBufferDC);
+	Timer::Get()->Render(backBufferDC);
+
+	BitBlt(hdc, 
+		0, 0, SCREEN_WIDTH, SCREEN_HEIGHT,
+		backBufferDC, 0, 0, SRCCOPY);
+}
+
+void GameManager::Create()
+{
+	Timer::Get();
+	Input::Get();
+
+
+}
+
+void GameManager::Release()
+{
+	Timer::Delete();
+	Input::Delete();
 }

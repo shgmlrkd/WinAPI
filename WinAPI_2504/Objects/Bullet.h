@@ -11,7 +11,7 @@ public:
 
 	void Update();
 
-	void Fire(POINT pos)
+	void Fire(Vector2 pos)
 	{
 		isActive = true;
 		center = pos;

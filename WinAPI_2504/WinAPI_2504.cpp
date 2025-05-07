@@ -43,16 +43,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINAPI2504));
 
-    MSG msg;
+    MSG msg = {};
 
-    // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    GameManager* gameManager = new GameManager();
+    
+    while (msg.message != WM_QUIT)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		else
+		{
+			gameManager->Update();
+			gameManager->Render();
+		}
     }
 
     return (int) msg.wParam;
@@ -102,10 +111,16 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    WCHAR title[] = L"내 게임";
 
+   RECT rect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+   AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+
    hWnd = CreateWindowW(szWindowClass, title, WS_OVERLAPPEDWINDOW,
-	   100, 100,//시작 위치
-	   SCREEN_WIDTH, SCREEN_HEIGHT,//창 크기
+       100, 100,//시작 위치
+       rect.right - rect.left,
+       rect.bottom - rect.top,//창 크기
        nullptr, nullptr, hInstance, nullptr);
+
+   SetMenu(hWnd, nullptr);
 
    if (!hWnd)
    {
@@ -118,25 +133,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-GameManager* gameManager;
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-	case WM_CREATE:
-	{
-		gameManager = new GameManager(hWnd);
-
-        //1000 -> 1초
-        SetTimer(hWnd, 1, 10, nullptr);
-	}
-	break;
-	case WM_TIMER:
-    {
-		gameManager->Update();
-	}
-	break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -163,15 +163,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            
-            gameManager->Render(hdc);
+            HDC hdc = BeginPaint(hWnd, &ps);            
 
             EndPaint(hWnd, &ps);
         }
         break;	
     case WM_DESTROY:
-        delete gameManager;
         PostQuitMessage(0);
         break;
     default:

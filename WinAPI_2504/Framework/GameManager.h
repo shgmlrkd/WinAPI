@@ -3,15 +3,21 @@
 class GameManager
 {
 public:
-	GameManager(HWND hWnd);
+	GameManager();
 	~GameManager();
 
 	void Update();
-	void Render(HDC hdc);
+	void Render();
 
 private:
-	HDC hdc;
+	void Create();
+	void Release();
 
-	Player* player;
-	Enemy* enemy;
+private:
+	HDC hdc;	
+
+	Scene* scene;
+
+	HDC backBufferDC;
+	HBITMAP backBufferBitmap;
 };

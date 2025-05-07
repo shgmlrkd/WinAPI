@@ -1,7 +1,5 @@
 #include "Framework.h"
 
-BulletManager* BulletManager::instance = nullptr;
-
 BulletManager::BulletManager()
 {
 	//bullet = new Bullet();	
@@ -66,7 +64,7 @@ bool BulletManager::IsCollision(Circle* circle)
 	return false;
 }
 
-void BulletManager::Fire(POINT pos)
+void BulletManager::Fire(Vector2 pos)
 {
 	for (Bullet*& bullet : bullets)
 	{

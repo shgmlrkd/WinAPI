@@ -8,7 +8,7 @@
 class Player : public Circle
 {
 private:
-	const int SPEED = 10;
+	const int SPEED = 300;
 	const int BULLET_POOL_SIZE = 50;
 
 public:
@@ -20,10 +20,17 @@ public:
 
 private:
 	void Fire();
+	void ControlFire();
+	void ControlMove();
+	void ClampToScreenBounds();
+
+	void DrawLine(HDC hdc);
 
 private:
 	//전방선전
 	//Bullet* bullet;
 	//vector<Bullet*> bullets;
-	bool isKeyPressed = false;
+	Vector2 firePos = {};
+
+	HPEN hPen;
 };
