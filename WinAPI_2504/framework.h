@@ -6,6 +6,8 @@
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 800
 
+#define PI 3.141592f
+
 #define DELTA Timer::Get()->GetElapsedTime()
 
 #include <windows.h>

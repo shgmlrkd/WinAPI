@@ -46,31 +46,36 @@ void BulletManager::Render(HDC hdc)
 	}
 }
 
-bool BulletManager::IsCollision(Circle* circle)
+bool BulletManager::IsCollision(Circle* circle, string tag)
 {
 	for (Bullet*& bullet : bullets)
 	{
-		if (bullet->IsActive() && bullet->IsCollisionCircle(circle))
-		{
-			//다운 캐스팅
+		if (!bullet->IsActive())
+			continue;
+		if (bullet->GetTag() != tag)
+			continue;
+		if (!bullet->IsCollisionCircle(circle))
+			continue;
+
+		//다운 캐스팅
 			//Enemy* enemy = (Enemy*)(circle);
 			//enemy->Damage();
 
-			bullet->SetActive(false);
-			return true;
-		}
+		bullet->SetActive(false);
+		return true;
 	}
 
 	return false;
 }
 
-void BulletManager::Fire(Vector2 pos, Vector2 direction)
+void BulletManager::Fire(Vector2 pos, string tag, Vector2 direction)
 {
 	for (Bullet*& bullet : bullets)
 	{
 		if (!bullet->IsActive())
 		{
 			bullet->Fire(pos, direction);
+			bullet->SetTag(tag);
 			break;
 		}
 	}
