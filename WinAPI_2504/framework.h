@@ -33,4 +33,4 @@ using namespace std;
 #include "Framework/GameManager.h"
 
 extern HWND hWnd;
-extern POINT mousePos;
+extern Vector2 mousePos;

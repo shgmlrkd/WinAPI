@@ -10,7 +10,7 @@ Bullet::~Bullet()
 
 void Bullet::Update()
 {
-	center.y -= SPEED;
+	center += direction * SPEED * DELTA;
 
 	if (center.y < 0)
 	{

@@ -28,12 +28,14 @@ void Player::Render(HDC hdc)
 
 void Player::Fire()
 {
-	BulletManager::Get()->Fire(firePos);
+	Vector2 direction = mousePos - firePos;
+
+	BulletManager::Get()->Fire(firePos, direction.GetNormalized());
 }
 
 void Player::ControlFire()
 {
-	if (Input::Get()->IsKeyDown(VK_SPACE))
+	if (Input::Get()->IsKeyDown(VK_LBUTTON))
 	{
 		Fire();	
 	}
@@ -41,14 +43,14 @@ void Player::ControlFire()
 
 void Player::ControlMove()
 {
-	if (GetAsyncKeyState(VK_RIGHT))
-		center.x += SPEED * DELTA;
-	if (GetAsyncKeyState(VK_LEFT))
-		center.x -= SPEED * DELTA;
-	if (GetAsyncKeyState(VK_UP))
-		center.y -= SPEED * DELTA;
-	if (GetAsyncKeyState(VK_DOWN))
-		center.y += SPEED * DELTA;
+	if (GetAsyncKeyState('D'))
+		center += Vector2::Right() * SPEED * DELTA;
+	if (GetAsyncKeyState('A'))
+		center += Vector2::Left() * SPEED * DELTA;
+	if (GetAsyncKeyState('W'))
+		center += Vector2::Up() * SPEED * DELTA;
+	if (GetAsyncKeyState('S'))
+		center += Vector2::Down() * SPEED * DELTA;
 }
 
 void Player::ClampToScreenBounds()

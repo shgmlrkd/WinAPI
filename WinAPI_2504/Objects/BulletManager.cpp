@@ -64,13 +64,13 @@ bool BulletManager::IsCollision(Circle* circle)
 	return false;
 }
 
-void BulletManager::Fire(Vector2 pos)
+void BulletManager::Fire(Vector2 pos, Vector2 direction)
 {
 	for (Bullet*& bullet : bullets)
 	{
 		if (!bullet->IsActive())
 		{
-			bullet->Fire(pos);
+			bullet->Fire(pos, direction);
 			break;
 		}
 	}

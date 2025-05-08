@@ -9,7 +9,7 @@
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 HWND hWnd;                                      // 현재 창입니다.
-POINT mousePos;
+Vector2 mousePos;
 
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
@@ -156,8 +156,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_MOUSEMOVE:
 	{
-		mousePos.x = LOWORD(lParam);
-		mousePos.y = HIWORD(lParam);
+		mousePos.x = (float)LOWORD(lParam);
+		mousePos.y = (float)HIWORD(lParam);
 	}
         break;
     case WM_PAINT:
