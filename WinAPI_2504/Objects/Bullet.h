@@ -13,11 +13,15 @@ public:
 
 	void Fire(Vector2 pos, Vector2 direction = Vector2::Up())
 	{
-		this->direction = direction;
+		this->direction = direction.GetNormalized();
 		isActive = true;
 		center = pos;
 	}
 
+	string GetTag() { return tag; }
+	void SetTag(string tag) { this->tag = tag; }	
+
 private:
+	string tag;
 	Vector2 direction = Vector2::Up();
 };

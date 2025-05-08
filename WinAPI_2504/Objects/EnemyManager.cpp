@@ -65,3 +65,11 @@ void EnemyManager::SpawnEnemy()
 		}
 	}
 }
+
+void EnemyManager::SetPlayer(Player* player)
+{
+	for (Enemy*& enemy : enemies)
+	{
+		enemy->SetPlayer(player);
+	}
+}
