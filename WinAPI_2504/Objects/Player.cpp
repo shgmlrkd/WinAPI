@@ -16,7 +16,6 @@ void Player::Update()
 {
 	ControlMove();
 	ControlFire();	
-	Aming();
 
 	ClampToScreenBounds();
 }
@@ -25,16 +24,13 @@ void Player::Render(HDC hdc)
 {
 	//Circle::Render(hdc);
 	DrawLine(hdc);
-
-	MoveToEx(hdc, firePos.x, firePos.y, nullptr);
-	LineTo(hdc, aimPoint.x, aimPoint.y);
 }
 
 void Player::Fire()
 {
 	Vector2 direction = mousePos - firePos;
 
-	BulletManager::Get()->Fire(firePos, "Player", direction.GetNormalized());
+	BulletManager::Get()->Fire(firePos, direction.GetNormalized());
 }
 
 void Player::ControlFire()
@@ -42,15 +38,6 @@ void Player::ControlFire()
 	if (Input::Get()->IsKeyDown(VK_LBUTTON))
 	{
 		Fire();	
-	}
-
-	if (Input::Get()->IsKeyPress('E'))
-	{
-		angle -= DELTA;
-	}
-	if (Input::Get()->IsKeyPress('Q'))
-	{
-		angle += DELTA;
 	}
 }
 
@@ -83,17 +70,6 @@ void Player::ClampToScreenBounds()
 	//Bottom
 	if (center.y + radius > SCREEN_HEIGHT)
 		center.y = SCREEN_HEIGHT - radius;
-}
-
-void Player::Aming()
-{
-	//Vector2 direction = mousePos - firePos;
-	//aimPoint = firePos + direction.GetNormalized() * AIM_LENGTH;
-
-	float x = cos(angle) * AIM_LENGTH;
-	float y = -sin(angle) * AIM_LENGTH;
-
-	aimPoint = firePos + Vector2(x, y);
 }
 
 void Player::DrawLine(HDC hdc)

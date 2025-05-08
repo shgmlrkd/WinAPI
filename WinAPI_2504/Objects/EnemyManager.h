@@ -16,9 +16,6 @@ public:
 	void Render(HDC hdc);
 
 	void SpawnEnemy();
-
-	void SetPlayer(Player* player);
-
 private:
 	vector<Enemy*> enemies;
 	float spawnTimer = 0.0f;
