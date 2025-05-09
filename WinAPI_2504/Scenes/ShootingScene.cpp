@@ -3,22 +3,21 @@
 
 ShootingScene::ShootingScene()
 {
-	player = new Player();	
-
-	BulletManager::Get();
-	EnemyManager::Get()->SetPlayer(player);
+	
 }
 
 ShootingScene::~ShootingScene()
-{
-	delete player;
-
-	BulletManager::Delete();
-	EnemyManager::Delete();
+{	
+	
 }
 
 void ShootingScene::Update()
 {
+	if (Input::Get()->IsKeyDown(VK_F2))
+	{
+		SCENE->ChangeScene("Title");
+	}
+
 	player->Update();
 
 	BulletManager::Get()->Update();
@@ -31,4 +30,20 @@ void ShootingScene::Render(HDC hdc)
 
 	BulletManager::Get()->Render(hdc);
 	EnemyManager::Get()->Render(hdc);
+}
+
+void ShootingScene::Start()
+{
+	player = new Player();
+
+	BulletManager::Get();
+	EnemyManager::Get()->SetPlayer(player);
+}
+
+void ShootingScene::End()
+{
+	delete player;
+
+	BulletManager::Delete();
+	EnemyManager::Delete();
 }
