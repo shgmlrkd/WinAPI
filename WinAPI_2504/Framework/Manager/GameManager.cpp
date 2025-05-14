@@ -2,6 +2,7 @@
 
 #include "Scenes/ShootingScene.h"
 #include "Scenes/TitleScene.h"
+#include "Scenes/InventoryScene.h"
 
 GameManager::GameManager()
 {
@@ -9,12 +10,15 @@ GameManager::GameManager()
 
 	backBufferDC = CreateCompatibleDC(hdc);
 	backBufferBitmap = CreateCompatibleBitmap(hdc, SCREEN_WIDTH, SCREEN_HEIGHT);
-	SelectObject(backBufferDC, backBufferBitmap);
+	SelectObject(backBufferDC, backBufferBitmap);	
+
+	SetBkMode(backBufferDC, TRANSPARENT);
 
 	Create();
 
 	SCENE->AddScene("Title", new TitleScene());
 	SCENE->AddScene("Game", new ShootingScene());
+	SCENE->AddScene("Inven", new InventoryScene());
 
 	SCENE->ChangeScene("Title");
 }

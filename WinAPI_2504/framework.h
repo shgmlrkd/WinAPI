@@ -6,6 +6,11 @@
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 800
 
+#define CENTER_X (SCREEN_WIDTH >> 1)
+#define CENTER_Y (SCREEN_HEIGHT >> 1)
+
+#define CENTER Vector2(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f)
+
 #define PI 3.141592f
 
 #define DELTA Timer::Get()->GetElapsedTime()
@@ -14,23 +19,38 @@
 #include <windows.h>
 #include <string>
 #include <unordered_map>
+#include <map>
 #include <vector>
+#include <functional>
+#include <fstream>
 
 using namespace std;
 
+#include "Framework/Utilities/Utility.h"
 #include "Framework/Utilities/Singleton.h"
 #include "Framework/Utilities/Timer.h"
 #include "Framework/Utilities/Input.h"
 
 #include "Framework/Math/Vector2.h"
 
-#include "Objects/PaintTool.h"
-#include "Objects/Circle.h"
-#include "Objects/Player.h"
-#include "Objects/Bullet.h"
-#include "Objects/BulletManager.h"
-#include "Objects/Enemy.h"
-#include "Objects/EnemyManager.h"
+#include "Objects/Basic/GameObject.h"
+#include "Objects/Basic/Circle.h"
+#include "Objects/Basic/Rect.h"
+
+#include "Objects/UI/Button.h"
+#include "Objects/UI/Panel.h"
+
+#include "Objects/Manger/DataManager.h"
+
+#include "Objects/Inventory/Good.h"
+#include "Objects/Inventory/StorePanel.h"
+
+#include "Objects/Etc/PaintTool.h"
+#include "Objects/Shooting/Player.h"
+#include "Objects/Shooting/Bullet.h"
+#include "Objects/Shooting/BulletManager.h"
+#include "Objects/Shooting/Enemy.h"
+#include "Objects/Shooting/EnemyManager.h"
 
 #include "Scenes/Scene.h"
 #include "Framework/Manager/SceneManager.h"
