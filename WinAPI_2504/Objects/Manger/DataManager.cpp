@@ -37,6 +37,7 @@ void DataManager::LoadData(const string& fileName)
 		itemData.explane = data[2];
 		itemData.price = stoi(data[3]);
 		itemData.value = stoi(data[4]);
+		itemData.type = (ItemData::Type)stoi(data[5]);
 
 		itemDatas[itemData.key] = itemData;
 	}

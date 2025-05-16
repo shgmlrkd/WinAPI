@@ -6,7 +6,7 @@ InventoryScene::InventoryScene()
 	DataManager::Get()->LoadData("Resources/Tables/ItemTable.csv");
 
 	CreateButtons();
-	CreatePanels();
+	CreatePanels();	
 }
 
 InventoryScene::~InventoryScene()
@@ -62,13 +62,21 @@ void InventoryScene::CreateButtons()
 
 void InventoryScene::CreatePanels()
 {	
-	 panels.push_back(new StorePanel());	 
-	 panels.push_back(new Panel(CENTER, Vector2(400, 300), RGB(0, 0, 255)));
-	 panels.push_back(new Panel(CENTER, Vector2(400, 300), RGB(255, 0, 0)));	 
+	Vector2 size(400, 300);
 
+	 panels.push_back(new StorePanel());	 	 
+	 panels.push_back(new InventoryPanel());
+	 panels.push_back(new EquipPanel());
+
+	 //StorePanel* storePanel = (StorePanel*)panels[(int)State::Store];
+	 //InventoryPanel* inventoryPanel = (InventoryPanel*)panels[(int)State::Inventory];
+	 //storePanel->SetInventoryPanel(inventoryPanel);
+
+	 int count = 0;
 	 for (Panel* panel : panels)
 	 {
 		 panel->SetActive(false);
+		 panel->Translate(Vector2::Right() * size.x * count++);
 	 }
 }
 

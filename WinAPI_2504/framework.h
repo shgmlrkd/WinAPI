@@ -3,8 +3,8 @@
 #include "targetver.h"
 #define WIN32_LEAN_AND_MEAN
 
-#define SCREEN_WIDTH 600
-#define SCREEN_HEIGHT 800
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
 
 #define CENTER_X (SCREEN_WIDTH >> 1)
 #define CENTER_Y (SCREEN_HEIGHT >> 1)
@@ -41,9 +41,14 @@ using namespace std;
 #include "Objects/UI/Panel.h"
 
 #include "Objects/Manger/DataManager.h"
+#include "Objects/Manger/EventManager.h"
 
 #include "Objects/Inventory/Good.h"
 #include "Objects/Inventory/StorePanel.h"
+#include "Objects/Inventory/InventoryItem.h"
+#include "Objects/Inventory/InventoryPanel.h"
+#include "Objects/Inventory/InventoryPlayer.h"
+#include "Objects/Inventory/EquipPanel.h"
 
 #include "Objects/Etc/PaintTool.h"
 #include "Objects/Shooting/Player.h"

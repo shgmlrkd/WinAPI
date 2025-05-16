@@ -20,7 +20,8 @@ Panel::~Panel()
 void Panel::Update()
 {
 	if (!isActive) return;
-
+	
+	closeButton->SetCenter(Right(), Top());
 	closeButton->Update();
 }
 
