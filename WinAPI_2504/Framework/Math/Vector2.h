@@ -18,6 +18,15 @@ struct Vector2
 	{
 		return Vector2(x - other.x, y - other.y);
 	}
+	Vector2 operator*(const Vector2& other) const
+	{
+		return Vector2(x * other.x, y * other.y);
+	}
+	Vector2 operator/(const Vector2& other) const
+	{
+		return Vector2(x / other.x, y / other.y);
+	}
+
 	Vector2 operator*(const float& scala) const
 	{
 		return Vector2(x * scala, y * scala);
@@ -32,6 +41,16 @@ struct Vector2
 	{
 		x -= other.x;
 		y -= other.y;
+	}
+	void operator*=(const Vector2& other)
+	{
+		x *= other.x;
+		y *= other.y;
+	}
+	void operator/=(const Vector2& other)
+	{
+		x/= other.x;
+		y/= other.y;
 	}
 	void operator*=(const float& scala)
 	{

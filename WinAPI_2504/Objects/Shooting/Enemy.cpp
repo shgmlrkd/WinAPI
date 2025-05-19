@@ -20,6 +20,7 @@ void Enemy::Update()
 
 	Move();
 	Damage();	
+	Fire();
 }
 
 void Enemy::Render(HDC hdc)
@@ -57,7 +58,7 @@ void Enemy::Damage()
 		return;
 	}	
 
-	if (BulletManager::Get()->IsCollision(this))
+	if (BulletManager::Get()->IsCollision(this, "Player"))
 	{
 		//isActive = false;
 		hp -= 10;
@@ -78,5 +79,29 @@ void Enemy::Move()
 	if (center.y > SCREEN_HEIGHT)
 	{
 		isActive = false;
+	}
+}
+
+void Enemy::Fire()
+{
+	fireTimer += DELTA;
+
+	if (fireTimer >= FIRE_INTERVAL)
+	{
+		fireTimer = 0.0f;
+
+		float stepAngle = PI * 2.0f / FIRE_COUNT;
+
+		for (int i = 0; i < FIRE_COUNT; i++)
+		{
+			float angle = stepAngle * i;
+			Vector2 direction(cos(angle), sin(angle));
+			BulletManager::Get()->Fire(center, "Enemy", direction);
+		}
+
+		//Vector2 direction = player->GetCenter() - center;
+		//BulletManager::Get()->Fire(center, "Enemy", direction);
+
+
 	}
 }
