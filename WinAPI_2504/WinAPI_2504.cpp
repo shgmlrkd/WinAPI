@@ -14,6 +14,34 @@ Vector2 mousePos;
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
+struct Vertex//정점 : 3차원 공간에서의 한 점
+{
+    float x, y, z;
+
+    Vertex(float x = 0, float y = 0)
+        : x(x), y(y), z(0)
+    {
+    }
+};
+
+vector<Vertex> vertices;
+
+ID3D11Device* device;//CPU - 직렬, 로드, 연산
+ID3D11DeviceContext* deviceContext;//GPU - 병렬, 출력
+
+IDXGISwapChain* swapChain;//후면 버퍼 관리
+ID3D11RenderTargetView* renderTargetView;//VRAM 후면버퍼 메모리 관리
+
+ID3D11VertexShader* vertexShader;
+ID3D11PixelShader* pixelShader;
+ID3D11InputLayout* inputLayout;
+ID3D11Buffer* vertexBuffer;//VRAM 메모리
+
+void Init();
+void Render();
+void Release();
+
+
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -45,7 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg = {};
 
-    GameManager* gameManager = new GameManager();
+    //GameManager* gameManager = new GameManager();
+    Init();
     
     while (msg.message != WM_QUIT)
     {
@@ -59,15 +88,164 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
-			gameManager->Update();
-			gameManager->Render();
+			//gameManager->Update();
+			//gameManager->Render();
+            Render();
 		}
     }
+
+    Release();
 
     return (int) msg.wParam;
 }
 
 
+
+void Init()
+{
+    UINT width = SCREEN_WIDTH;
+    UINT height = SCREEN_HEIGHT;
+
+    DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+    swapChainDesc.BufferDesc.Width = width;
+    swapChainDesc.BufferDesc.Height = height;
+    swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
+    swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
+    swapChainDesc.SampleDesc.Count = 1;
+    swapChainDesc.SampleDesc.Quality = 0;
+    swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    swapChainDesc.BufferCount = 1;
+    swapChainDesc.OutputWindow = hWnd;
+    swapChainDesc.Windowed = true;
+
+    D3D11CreateDeviceAndSwapChain(
+        nullptr,
+        D3D_DRIVER_TYPE_HARDWARE,
+        0,
+        0,
+        nullptr,
+        0,
+        D3D11_SDK_VERSION,
+        &swapChainDesc,
+        &swapChain,
+        &device,
+        nullptr,
+        &deviceContext
+    );
+    
+    ID3D11Texture2D* backBuffer;
+    swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
+    device->CreateRenderTargetView(backBuffer, nullptr, &renderTargetView);
+
+    deviceContext->OMSetRenderTargets(1, &renderTargetView, nullptr);
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    //Shader Load
+    DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
+
+    ID3DBlob* vertexBlob;
+    D3DCompileFromFile(L"Resources/Shaders/Tutorial.hlsl", nullptr, nullptr,
+        "VS", "vs_5_0", flags, 0, &vertexBlob, nullptr);
+
+    device->CreateVertexShader(vertexBlob->GetBufferPointer(),
+        vertexBlob->GetBufferSize(), nullptr, &vertexShader);
+
+    ID3DBlob* pixelBlob;
+    D3DCompileFromFile(L"Resources/Shaders/Tutorial.hlsl", nullptr, nullptr,
+        "PS", "ps_5_0", flags, 0, &pixelBlob, nullptr);
+
+    device->CreatePixelShader(pixelBlob->GetBufferPointer(),
+        pixelBlob->GetBufferSize(), nullptr, &pixelShader);
+
+    /////////////////////////////////////////////////////////////////////////
+    //InputLayout
+    D3D11_INPUT_ELEMENT_DESC elementDesc = {};
+    elementDesc.SemanticName = "POSITION";
+    elementDesc.SemanticIndex = 0;
+    elementDesc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+    elementDesc.InputSlot = 0;
+    elementDesc.AlignedByteOffset = 0;
+    elementDesc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+    elementDesc.InstanceDataStepRate = 0;
+
+    vector<D3D11_INPUT_ELEMENT_DESC> elementDescs;
+    elementDescs.push_back(elementDesc);
+
+    device->CreateInputLayout(elementDescs.data(), elementDescs.size(),
+        vertexBlob->GetBufferPointer(), vertexBlob->GetBufferSize(),
+        &inputLayout);
+
+    vertexBlob->Release();
+    pixelBlob->Release();
+    /////////////////////////////////////////////////////////////////
+    //Vieport 변환
+    D3D11_VIEWPORT viewport;
+    viewport.Width = SCREEN_WIDTH;
+    viewport.Height = SCREEN_HEIGHT;
+    viewport.MinDepth = 0.0f;
+    viewport.MaxDepth = 1.0f;
+    viewport.TopLeftX = 0.0f;
+    viewport.TopLeftY = 0.0f;
+
+    deviceContext->RSSetViewports(1, &viewport);
+    ///////////////////////////////////////////////////////////////////
+    //Vertex 설정
+    //Vertex vertex = { 0, 0, 0 };
+
+    //Polygon : 정점 3개가 합쳐져서 이루는 삼각형
+    //정점의 순서에 따라서 시계방향이 앞면을 가진다.
+
+    vertices.emplace_back(+0.5f, +0.5f);    
+    vertices.emplace_back(+0.5f, -0.5f);
+    vertices.emplace_back(-0.5f, +0.5f);
+    
+    //vertices.emplace_back(-0.5f, -0.5f);
+
+    D3D11_BUFFER_DESC bufferDesc = {};
+    bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+    bufferDesc.ByteWidth = sizeof(Vertex) * vertices.size();
+    bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+
+    D3D11_SUBRESOURCE_DATA initData = {};
+    //initData.pSysMem = &vertices[0];
+    initData.pSysMem = vertices.data();
+
+    device->CreateBuffer(&bufferDesc, &initData, &vertexBuffer);
+}
+
+void Render()
+{
+    float clearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f };
+    deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
+
+    //Render();
+    UINT offset = 0;
+    UINT stride = sizeof(Vertex);//정점 하나의 크기
+
+    deviceContext->IASetInputLayout(inputLayout);
+    deviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+    //deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+    //deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+    deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    deviceContext->VSSetShader(vertexShader, nullptr, 0);
+    deviceContext->PSSetShader(pixelShader, nullptr, 0);
+
+    deviceContext->Draw(vertices.size(), 0);
+
+    swapChain->Present(0, 0);
+}
+
+void Release()
+{
+    device->Release();
+    deviceContext->Release();
+
+    swapChain->Release();
+    renderTargetView->Release();
+}
 
 //
 //  함수: MyRegisterClass()
