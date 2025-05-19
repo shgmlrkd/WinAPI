@@ -200,6 +200,12 @@ void Init()
     vertices.emplace_back(+0.5f, +0.5f);    
     vertices.emplace_back(+0.5f, -0.5f);
     vertices.emplace_back(-0.5f, +0.5f);
+    vertices.emplace_back(-0.5f, -0.5f);
+
+
+    //vertices.emplace_back(-0.5f, +0.5f);
+    //vertices.emplace_back(+0.5f, -0.5f);
+    //vertices.emplace_back(-0.5f, -0.5f);
     
     //vertices.emplace_back(-0.5f, -0.5f);
 
@@ -228,7 +234,8 @@ void Render()
     deviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
     //deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
     //deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-    deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    //deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
     deviceContext->VSSetShader(vertexShader, nullptr, 0);
     deviceContext->PSSetShader(pixelShader, nullptr, 0);
