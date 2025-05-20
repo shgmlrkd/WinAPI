@@ -16,6 +16,9 @@
 #define DELTA Timer::Get()->GetElapsedTime()
 #define SCENE SceneManager::Get()
 
+#define DEVICE Device::Get()->GetDevice()
+#define DC Device::Get()->GetDeviceContext()
+
 #include <windows.h>
 #include <string>
 #include <unordered_map>
@@ -23,14 +26,25 @@
 #include <vector>
 #include <functional>
 #include <fstream>
+#include <assert.h>
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
+#include <DirectXMath.h>
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
 using namespace std;
+using namespace DirectX;
+
+typedef XMFLOAT4 Float4;
+typedef XMFLOAT3 Float3;
+typedef XMFLOAT2 Float2;
+typedef XMMATRIX Matrix;
+typedef XMVECTOR Vector4;
+typedef XMFLOAT4X4 Float4x4;
+
 
 #include "Framework/Utilities/Utility.h"
 #include "Framework/Utilities/Singleton.h"
@@ -39,29 +53,25 @@ using namespace std;
 
 #include "Framework/Math/Vector2.h"
 
+#include "Framework/Device/Device.h"
+
+#include "Framework/Shader/Shader.h"
+#include "Framework/Shader/VertexShader.h"
+#include "Framework/Shader/PixelShader.h"
+
+#include "Framework/Buffer/VertexLayouts.h"
+#include "Framework/Buffer/VertexBuffer.h"
+#include "Framework/Buffer/IndexBuffer.h"
+#include "Framework/Buffer/ConstBuffer.h"
+#include "Framework/Buffer/GlobalBffer.h"
+
 #include "Objects/Basic/GameObject.h"
 #include "Objects/Basic/Circle.h"
 #include "Objects/Basic/Rect.h"
 
 #include "Objects/UI/Button.h"
-#include "Objects/UI/Panel.h"
-
 #include "Objects/Manger/DataManager.h"
 #include "Objects/Manger/EventManager.h"
-
-#include "Objects/Inventory/Good.h"
-#include "Objects/Inventory/StorePanel.h"
-#include "Objects/Inventory/InventoryItem.h"
-#include "Objects/Inventory/InventoryPanel.h"
-#include "Objects/Inventory/InventoryPlayer.h"
-#include "Objects/Inventory/EquipPanel.h"
-
-#include "Objects/Etc/PaintTool.h"
-#include "Objects/Shooting/Player.h"
-#include "Objects/Shooting/Bullet.h"
-#include "Objects/Shooting/BulletManager.h"
-#include "Objects/Shooting/Enemy.h"
-#include "Objects/Shooting/EnemyManager.h"
 
 #include "Scenes/Scene.h"
 #include "Framework/Manager/SceneManager.h"

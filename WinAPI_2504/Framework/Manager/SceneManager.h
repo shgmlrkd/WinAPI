@@ -7,7 +7,7 @@ public:
 	~SceneManager();
 
 	void Update();
-	void Render(HDC hdc);
+	void Render();
 
 	void AddScene(string key, Scene* scene);
 	void ChangeScene(string key);

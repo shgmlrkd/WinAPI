@@ -1,36 +1,19 @@
 #include "Framework.h"
 
-#include "Scenes/ShootingScene.h"
-#include "Scenes/TitleScene.h"
-#include "Scenes/InventoryScene.h"
+#include "Scenes/TutorialScene.h"
 
 GameManager::GameManager()
 {
-	hdc = GetDC(hWnd);	
-
-	backBufferDC = CreateCompatibleDC(hdc);
-	backBufferBitmap = CreateCompatibleBitmap(hdc, SCREEN_WIDTH, SCREEN_HEIGHT);
-	SelectObject(backBufferDC, backBufferBitmap);	
-
-	SetBkMode(backBufferDC, TRANSPARENT);
-
 	Create();
+		
+	SCENE->AddScene("Game", new TutorialScene());	
 
-	SCENE->AddScene("Title", new TitleScene());
-	SCENE->AddScene("Game", new ShootingScene());
-	SCENE->AddScene("Inven", new InventoryScene());
-
-	SCENE->ChangeScene("Title");
+	SCENE->ChangeScene("Game");
 }
 
 GameManager::~GameManager()
 {
-	ReleaseDC(hWnd, hdc);			
-
 	Release();
-
-	DeleteObject(backBufferBitmap);
-	DeleteDC(backBufferDC);
 }
 
 void GameManager::Update()
@@ -45,20 +28,20 @@ void GameManager::Update()
 
 void GameManager::Render()
 {
-	PatBlt(backBufferDC, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITENESS);	
+	Device::Get()->Clear();
 
-	SCENE->Render(backBufferDC);
-	Timer::Get()->Render(backBufferDC);
+	SCENE->Render();	
 
-	BitBlt(hdc, 
-		0, 0, SCREEN_WIDTH, SCREEN_HEIGHT,
-		backBufferDC, 0, 0, SRCCOPY);
+	Device::Get()->Present();
 }
 
 void GameManager::Create()
 {
 	Timer::Get();
 	Input::Get();
+
+	Device::Get();
+
 	SceneManager::Get();
 }
 
@@ -66,6 +49,9 @@ void GameManager::Release()
 {
 	Timer::Delete();
 	Input::Delete();
+
+	Device::Delete();
+	Shader::Delete();
 
 	SceneManager::Delete();
 }
