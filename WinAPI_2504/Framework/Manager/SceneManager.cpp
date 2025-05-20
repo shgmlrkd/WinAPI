@@ -17,9 +17,15 @@ void SceneManager::Update()
 	currentScene->Update();
 }
 
+<<<<<<< HEAD
 void SceneManager::Render(HDC hdc)
 {
 	currentScene->Render(hdc);
+=======
+void SceneManager::Render()
+{
+	currentScene->Render();
+>>>>>>> upstream/main
 }
 
 void SceneManager::AddScene(string key, Scene* scene)

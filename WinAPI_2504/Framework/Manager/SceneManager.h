@@ -7,7 +7,11 @@ public:
 	~SceneManager();
 
 	void Update();
+<<<<<<< HEAD
 	void Render(HDC hdc);
+=======
+	void Render();
+>>>>>>> upstream/main
 
 	void AddScene(string key, Scene* scene);
 	void ChangeScene(string key);

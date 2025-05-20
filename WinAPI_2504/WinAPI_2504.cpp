@@ -88,6 +88,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
+<<<<<<< HEAD
 			//gameManager->Update();
 			//gameManager->Render();
             Render();
@@ -95,6 +96,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     Release();
+=======
+			gameManager->Update();
+			gameManager->Render();            
+		}
+    }
+
+    delete gameManager;
+>>>>>>> upstream/main
 
     return (int) msg.wParam;
 }
@@ -103,6 +112,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 void Init()
 {
+<<<<<<< HEAD
     UINT width = SCREEN_WIDTH;
     UINT height = SCREEN_HEIGHT;
 
@@ -139,10 +149,14 @@ void Init()
     device->CreateRenderTargetView(backBuffer, nullptr, &renderTargetView);
 
     deviceContext->OMSetRenderTargets(1, &renderTargetView, nullptr);
+=======
+    
+>>>>>>> upstream/main
 
     /////////////////////////////////////////////////////////////////////////////////
 
     //Shader Load
+<<<<<<< HEAD
     DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
 
     ID3DBlob* vertexBlob;
@@ -213,10 +227,14 @@ void Init()
     initData.pSysMem = vertices.data();
 
     device->CreateBuffer(&bufferDesc, &initData, &vertexBuffer);
+=======
+    
+>>>>>>> upstream/main
 }
 
 void Render()
 {
+<<<<<<< HEAD
     float clearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f };
     deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
 
@@ -236,15 +254,27 @@ void Render()
     deviceContext->Draw(vertices.size(), 0);
 
     swapChain->Present(0, 0);
+=======
+    
+
+    //Render();
+    
+
+    
+>>>>>>> upstream/main
 }
 
 void Release()
 {
+<<<<<<< HEAD
     device->Release();
     deviceContext->Release();
 
     swapChain->Release();
     renderTargetView->Release();
+=======
+    
+>>>>>>> upstream/main
 }
 
 //

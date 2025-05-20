@@ -27,6 +27,7 @@
     <ClInclude Include="WinAPI_2504.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Objects\Etc\PaintTool.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -46,17 +47,26 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Shooting\Enemy.h">
+=======
+    <ClInclude Include="Objects\Basic\Circle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Manager\GameManager.h">
+>>>>>>> upstream/main
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\Scene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Scenes\ShootingScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Shooting\EnemyManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+=======
+>>>>>>> upstream/main
     <ClInclude Include="Framework\Utilities\Singleton.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -72,9 +82,12 @@
     <ClInclude Include="Framework\Manager\SceneManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Scenes\TitleScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+=======
+>>>>>>> upstream/main
     <ClInclude Include="Objects\UI\Button.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -84,18 +97,22 @@
     <ClInclude Include="Objects\Basic\GameObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Scenes\InventoryScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\UI\Panel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+=======
+>>>>>>> upstream/main
     <ClInclude Include="Objects\Manger\DataManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Utilities\Utility.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Objects\Inventory\StorePanel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -115,6 +132,39 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Inventory\EquipPanel.h">
+=======
+    <ClInclude Include="Objects\Manger\EventManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Device\Device.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\TutorialScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Buffer\VertexLayouts.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Shader\Shader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Shader\PixelShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Shader\VertexShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Buffer\IndexBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Buffer\VertexBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Buffer\ConstBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Buffer\GlobalBffer.h">
+>>>>>>> upstream/main
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -122,15 +172,19 @@
     <ClCompile Include="WinAPI_2504.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Objects\Etc\PaintTool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+=======
+>>>>>>> upstream/main
     <ClCompile Include="Framework.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Basic\Circle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Objects\Shooting\Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -150,6 +204,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Shooting\EnemyManager.cpp">
+=======
+    <ClCompile Include="Framework\Manager\GameManager.cpp">
+>>>>>>> upstream/main
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Utilities\Timer.cpp">
@@ -161,27 +218,34 @@
     <ClCompile Include="Framework\Manager\SceneManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Scenes\TitleScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+=======
+>>>>>>> upstream/main
     <ClCompile Include="Objects\Basic\Rect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\UI\Button.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Scenes\InventoryScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\UI\Panel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+=======
+>>>>>>> upstream/main
     <ClCompile Include="Objects\Manger\DataManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Utilities\Utility.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Objects\Inventory\StorePanel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -201,6 +265,33 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Inventory\EquipPanel.cpp">
+=======
+    <ClCompile Include="Objects\Manger\EventManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Device\Device.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\TutorialScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Shader\Shader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Shader\PixelShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Shader\VertexShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Buffer\IndexBuffer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Buffer\VertexBuffer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Buffer\ConstBuffer.cpp">
+>>>>>>> upstream/main
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

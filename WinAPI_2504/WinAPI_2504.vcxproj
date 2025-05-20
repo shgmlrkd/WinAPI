@@ -137,15 +137,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Framework\Buffer\ConstBuffer.h" />
+    <ClInclude Include="Framework\Buffer\GlobalBffer.h" />
+    <ClInclude Include="Framework\Buffer\IndexBuffer.h" />
+    <ClInclude Include="Framework\Buffer\VertexBuffer.h" />
+    <ClInclude Include="Framework\Buffer\VertexLayouts.h" />
+    <ClInclude Include="Framework\Device\Device.h" />
+>>>>>>> upstream/main
     <ClInclude Include="Framework\Manager\GameManager.h" />
     <ClInclude Include="Framework\Manager\SceneManager.h" />
     <ClInclude Include="Framework\Math\Vector2.h" />
+    <ClInclude Include="Framework\Shader\PixelShader.h" />
+    <ClInclude Include="Framework\Shader\Shader.h" />
+    <ClInclude Include="Framework\Shader\VertexShader.h" />
     <ClInclude Include="Framework\Utilities\Input.h" />
     <ClInclude Include="Framework\Utilities\Singleton.h" />
     <ClInclude Include="Framework\Utilities\Timer.h" />
     <ClInclude Include="Framework\Utilities\Utility.h" />
     <ClInclude Include="Objects\Basic\GameObject.h" />
     <ClInclude Include="Objects\Basic\Rect.h" />
+<<<<<<< HEAD
     <ClInclude Include="Objects\Inventory\EquipPanel.h" />
     <ClInclude Include="Objects\Inventory\Good.h" />
     <ClInclude Include="Objects\Inventory\InventoryItem.h" />
@@ -163,11 +176,21 @@
     <ClInclude Include="Objects\Shooting\Player.h" />
     <ClInclude Include="Objects\UI\Button.h" />
     <ClInclude Include="Objects\UI\Panel.h" />
+=======
+    <ClInclude Include="Objects\Manger\DataManager.h" />
+    <ClInclude Include="Objects\Manger\EventManager.h" />
+    <ClInclude Include="Objects\Basic\Circle.h" />
+    <ClInclude Include="Objects\UI\Button.h" />
+>>>>>>> upstream/main
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scenes\InventoryScene.h" />
     <ClInclude Include="Scenes\Scene.h" />
+<<<<<<< HEAD
     <ClInclude Include="Scenes\ShootingScene.h" />
     <ClInclude Include="Scenes\TitleScene.h" />
+=======
+    <ClInclude Include="Scenes\TutorialScene.h" />
+>>>>>>> upstream/main
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WinAPI_2504.h" />
   </ItemGroup>
@@ -175,12 +198,25 @@
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Framework\Manager\GameManager.cpp" />
     <ClCompile Include="Framework\Manager\SceneManager.cpp" />
+=======
+    <ClCompile Include="Framework\Buffer\ConstBuffer.cpp" />
+    <ClCompile Include="Framework\Buffer\IndexBuffer.cpp" />
+    <ClCompile Include="Framework\Buffer\VertexBuffer.cpp" />
+    <ClCompile Include="Framework\Device\Device.cpp" />
+    <ClCompile Include="Framework\Manager\GameManager.cpp" />
+    <ClCompile Include="Framework\Manager\SceneManager.cpp" />
+    <ClCompile Include="Framework\Shader\PixelShader.cpp" />
+    <ClCompile Include="Framework\Shader\Shader.cpp" />
+    <ClCompile Include="Framework\Shader\VertexShader.cpp" />
+>>>>>>> upstream/main
     <ClCompile Include="Framework\Utilities\Input.cpp" />
     <ClCompile Include="Framework\Utilities\Timer.cpp" />
     <ClCompile Include="Framework\Utilities\Utility.cpp" />
     <ClCompile Include="Objects\Basic\Rect.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Objects\Inventory\EquipPanel.cpp" />
     <ClCompile Include="Objects\Inventory\Good.cpp" />
     <ClCompile Include="Objects\Inventory\InventoryItem.cpp" />
@@ -201,6 +237,13 @@
     <ClCompile Include="Scenes\InventoryScene.cpp" />
     <ClCompile Include="Scenes\ShootingScene.cpp" />
     <ClCompile Include="Scenes\TitleScene.cpp" />
+=======
+    <ClCompile Include="Objects\Manger\DataManager.cpp" />
+    <ClCompile Include="Objects\Manger\EventManager.cpp" />
+    <ClCompile Include="Objects\Basic\Circle.cpp" />
+    <ClCompile Include="Objects\UI\Button.cpp" />
+    <ClCompile Include="Scenes\TutorialScene.cpp" />
+>>>>>>> upstream/main
     <ClCompile Include="WinAPI_2504.cpp" />
   </ItemGroup>
   <ItemGroup>
